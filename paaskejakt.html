@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Påskeegg-jakt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #fdf6ec;
+      font-family: 'Inter', sans-serif;
+      color: #3a2e27;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem 4rem;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Lora', serif;
+    }
+
+    /* Fox image */
+    .fox-image {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 1rem auto;
+    }
+
+    /* Progress dots */
+    .progress {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #e0d4c6;
+      transition: background-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .dot.active {
+      background-color: #c0624a;
+      transform: scale(1.2);
+    }
+
+    .dot.done {
+      background-color: #5a7a5e;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(60, 40, 20, 0.10);
+      padding: 1.75rem 1.5rem;
+      width: 100%;
+      max-width: 420px;
+      margin-bottom: 1rem;
+      transition: transform 0.15s ease;
+    }
+
+    .card.pulse {
+      animation: card-pulse 0.5s ease;
+    }
+
+    @keyframes card-pulse {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.025); }
+      100% { transform: scale(1); }
+    }
+
+    .stage-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #c0624a;
+      margin-bottom: 1rem;
+    }
+
+    .fox-speech {
+      font-style: italic;
+      font-family: 'Lora', serif;
+      font-size: 0.97rem;
+      line-height: 1.65;
+      color: #5a4a3a;
+      margin-bottom: 1.25rem;
+      border-left: 3px solid #e0c9b0;
+      padding-left: 0.85rem;
+    }
+
+    /* Input fields */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #6b5040;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid #e0cfc0;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: #3a2e27;
+      background: #fdf9f5;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #c0624a;
+    }
+
+    /* Four-digit code inputs */
+    .code-inputs {
+      display: flex;
+      gap: 0.6rem;
+      justify-content: center;
+      margin: 1rem 0 0.75rem;
+    }
+
+    .code-inputs input {
+      width: 56px;
+      height: 64px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-family: 'Lora', serif;
+      font-weight: 600;
+      border: 2px solid #e0cfc0;
+      border-radius: 10px;
+      background: #fdf9f5;
+      color: #3a2e27;
+      outline: none;
+      transition: border-color 0.2s ease;
+      caret-color: #c0624a;
+      /* hide spinner */
+      -moz-appearance: textfield;
+    }
+
+    .code-inputs input:focus {
+      border-color: #c0624a;
+    }
+
+    /* Buttons */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background-color: #c0624a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn:hover {
+      background-color: #a8513c;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Error message */
+    .error-msg {
+      display: none;
+      color: #c0624a;
+      font-size: 0.87rem;
+      margin-top: 0.4rem;
+    }
+
+    .error-msg.visible {
+      display: block;
+    }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      color: #5a7a5e;
+      font-size: 0.95rem;
+      font-family: 'Lora', serif;
+      font-style: italic;
+      margin-top: 0.75rem;
+      line-height: 1.55;
+    }
+
+    .success-msg.visible {
+      display: block;
+    }
+
+    .checkmark {
+      display: inline-block;
+      font-size: 1.4rem;
+      margin-right: 0.3rem;
+      animation: pop-in 0.3s ease;
+    }
+
+    @keyframes pop-in {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Welcome screen */
+    #screen-welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    #screen-welcome h1 {
+      font-size: 2rem;
+      color: #c0624a;
+      margin-bottom: 1.25rem;
+    }
+
+    #screen-welcome .welcome-text {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #5a4a3a;
+      margin-bottom: 1.75rem;
+    }
+
+    #screen-welcome .btn {
+      max-width: 220px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* End screen */
+    #screen-end {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+
+    #screen-end .end-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    #screen-end .end-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(60, 40, 20, 0.10);
+      padding: 1.75rem 1.5rem;
+      width: 100%;
+      text-align: left;
+    }
+
+    #screen-end .end-card p {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #5a4a3a;
+      margin-bottom: 0.6rem;
+    }
+
+    #screen-end .end-card .signature {
+      font-weight: 600;
+      margin-top: 0.8rem;
+      color: #c0624a;
+    }
+
+    /* Image */
+    .puzzle-image {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 12px;
+      margin: 1rem auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* Screen visibility */
+    .screen {
+      display: none;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Reset link */
+    .reset-link {
+      margin-top: 2.5rem;
+      font-size: 0.78rem;
+      color: #b0a090;
+      cursor: pointer;
+      text-decoration: underline;
+      text-align: center;
+    }
+
+    .reset-link:hover {
+      color: #8a7060;
+    }
+
+    /* Stage 4 multi-field layout */
+    .combo-field {
+      margin-bottom: 1rem;
+    }
+
+    .combo-field label {
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BILDE: Legg filen "rev.png" i samme mappe som denne HTML-filen -->
+  <img src="rev.png" alt="Reven" class="fox-image" />
+
+  <!-- Progress dots (hidden on welcome/end) -->
+  <div class="progress" id="progress-dots" style="display:none;">
+    <div class="dot" id="dot-1"></div>
+    <div class="dot" id="dot-2"></div>
+    <div class="dot" id="dot-3"></div>
+    <div class="dot" id="dot-4"></div>
+  </div>
+
+  <!-- WELCOME SCREEN -->
+  <div id="screen-welcome">
+    <h1>Påskeegg-jakt</h1>
+    <p class="welcome-text">
+      Jeg var her før du kom.<br />
+      Ikke lenge — men nok til å rote litt rundt og gjemme noe du vil ha. Det er søtt, det er ditt, og du finner det hvis du følger etter meg.<br /><br />
+      Jeg er ikke vanskelig å følge. Jeg er bare litt rampete.
+    </p>
+    <button class="btn" onclick="startJakt()">Jeg er klar</button>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="screen" id="screen-stage1">
+    <div class="card" id="card-stage1">
+      <div class="stage-title">Reven ankom</div>
+      <p class="fox-speech">
+        Da jeg kom inn, la jeg merke til noe som lå og slang. Det virket viktig. Eller i hvert fall veldig spesifikt.<br /><br />
+        Hva er dette?
+      </p>
+
+      <!-- BILDE: Legg filen "smokk.jpg" i samme mappe som denne HTML-filen -->
+      <img id="stage1-image" src="smokk.jpg" alt="Hva er dette?" class="puzzle-image" />
+
+      <div class="input-group">
+        <label for="input-stage1">Hva ser du?</label>
+        <input type="text" id="input-stage1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <span class="error-msg" id="error-stage1">Ikke helt. Se litt nøyere.</span>
+      </div>
+      <button class="btn" onclick="checkStage1()">Sjekk svar</button>
+      <div class="success-msg" id="success-stage1">
+        <span class="checkmark">✓</span>Smokk, ja. Ikke det jeg hadde forventet å finne her heller. Men greit — vi går videre.
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="screen" id="screen-stage2">
+    <div class="card" id="card-stage2">
+      <div class="stage-title">Reven utforsket</div>
+      <p class="fox-speech">
+        Jeg tok meg en liten runde rundt på hytta. Fin plass. Litt rotete, men sjarmerende.<br /><br />
+        Jeg fant et kort jeg likte og bestemte meg for å dele det opp. Fire biter. Fire steder. Alle gjemt der det føltes riktig.<br /><br />
+        Et sted kaldt. Et sted varmt. Et sted man leser. Et sted man vasker seg.<br /><br />
+        Finn alle fire. Legg dem sammen. Da ser du hva du skal skrive.
+      </p>
+      <div class="code-inputs">
+        <input type="text" inputmode="numeric" maxlength="1" id="code-1" class="code-input" oninput="codeInput(this, 1)" onkeydown="codeKeydown(event, 1)" />
+        <input type="text" inputmode="numeric" maxlength="1" id="code-2" class="code-input" oninput="codeInput(this, 2)" onkeydown="codeKeydown(event, 2)" />
+        <input type="text" inputmode="numeric" maxlength="1" id="code-3" class="code-input" oninput="codeInput(this, 3)" onkeydown="codeKeydown(event, 3)" />
+        <input type="text" inputmode="numeric" maxlength="1" id="code-4" class="code-input" oninput="codeInput(this, 4)" onkeydown="codeKeydown(event, 4)" />
+      </div>
+      <span class="error-msg" id="error-stage2">Det stemmer ikke. Har du alle fire bitene?</span>
+      <button class="btn" onclick="checkStage2()">Sjekk kode</button>
+      <div class="success-msg" id="success-stage2">
+        <span class="checkmark">✓</span>Fire biter, én kode. Ikke dumt. Jeg ryddet ikke etter meg, men det ser ut som du klarte deg fint.
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="screen" id="screen-stage3">
+    <div class="card" id="card-stage3">
+      <div class="stage-title">Reven klatret</div>
+      <p class="fox-speech">
+        Etter kjøkkenet og stua begynte jeg å vandre litt lenger.<br /><br />
+        Jeg fant stigen. Og under det nederste trinnet hadde noen glemt et ark. Så jeg lot det ligge — men jeg brettet det litt.<br /><br />
+        Finn arket. Løs det. Svaret sender deg et sted — og der finner du det du trenger.
+      </p>
+      <div class="input-group">
+        <label for="input-stage3">Løsningsord</label>
+        <input type="text" id="input-stage3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+        <span class="error-msg" id="error-stage3">Ikke riktig. Er du sikker på at du fant konvolutten?</span>
+      </div>
+      <button class="btn" onclick="checkStage3()">Sjekk svar</button>
+      <div class="success-msg" id="success-stage3">
+        <span class="checkmark">✓</span>Bra. Da vet du hvor du skal videre.
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 4 -->
+  <div class="screen" id="screen-stage4">
+    <div class="card" id="card-stage4">
+      <div class="stage-title">Revens siste steg</div>
+      <p class="fox-speech">
+        Nå er vi der.<br /><br />
+        Du har svart på tre ting allerede. Den siste låsen er laget av akkurat de svarene.<br /><br />
+        Skriv dem inn — i riktig rekkefølge — så er vi ferdige.
+      </p>
+
+      <div class="combo-field">
+        <label for="combo-1">Hva het det på bildet?</label>
+        <input type="text" id="combo-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      </div>
+      <div class="combo-field">
+        <label for="combo-2">Koden fra kortbitene</label>
+        <input type="text" id="combo-2" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" />
+      </div>
+      <div class="combo-field">
+        <label for="combo-3">Løsningsordet fra konvolutten</label>
+        <input type="text" id="combo-3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+      </div>
+
+      <span class="error-msg" id="error-stage4">Ett eller flere svar stemmer ikke. Sjekk alle tre.</span>
+      <button class="btn" onclick="checkStage4()">Lås opp</button>
+    </div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="screen-end" style="display:none; flex-direction:column; align-items:center; width:100%; max-width:420px;">
+    <div class="end-title">🦊</div>
+    <div class="end-card">
+      <p>Ikke verst.</p>
+      <p>Det du leter etter er oppe på hemsen. Gå til høyre — inni et av de små lagringsrommene der.</p>
+      <p>Jeg tok ingenting. Bare kikket litt.</p>
+      <p>God påske.</p>
+      <p class="signature">— Reven</p>
+    </div>
+  </div>
+
+  <!-- Reset link -->
+  <div class="reset-link" onclick="resetJakt()">Nullstill</div>
+
+  <script>
+    // ─── State ────────────────────────────────────────────────────────────────
+    const STORAGE_KEY = 'paaskejakt';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : { completedStages: [] };
+      } catch {
+        return { completedStages: [] };
+      }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function markStageComplete(n) {
+      const state = loadState();
+      if (!state.completedStages.includes(n)) {
+        state.completedStages.push(n);
+      }
+      saveState(state);
+    }
+
+    // ─── Screens ──────────────────────────────────────────────────────────────
+    const SCREENS = ['screen-welcome', 'screen-stage1', 'screen-stage2', 'screen-stage3', 'screen-stage4', 'screen-end'];
+
+    function showScreen(id) {
+      SCREENS.forEach(s => {
+        const el = document.getElementById(s);
+        if (el) {
+          el.style.display = 'none';
+          el.classList.remove('active');
+        }
+      });
+
+      const target = document.getElementById(id);
+      if (target) {
+        target.style.display = 'flex';
+        target.classList.add('active');
+      }
+
+      const dotsEl = document.getElementById('progress-dots');
+      const showDots = id !== 'screen-welcome' && id !== 'screen-end';
+      dotsEl.style.display = showDots ? 'flex' : 'none';
+
+      if (showDots) updateDots();
+    }
+
+    function updateDots() {
+      const state = loadState();
+      const completed = state.completedStages;
+
+      const stageScreens = ['screen-stage1', 'screen-stage2', 'screen-stage3', 'screen-stage4'];
+      const currentScreenId = SCREENS.find(s => {
+        const el = document.getElementById(s);
+        return el && el.style.display !== 'none' && el.style.display !== '';
+      });
+      const currentStageIdx = stageScreens.indexOf(currentScreenId); // 0-based, or -1
+
+      for (let i = 1; i <= 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        dot.classList.remove('active', 'done');
+        if (completed.includes(i)) {
+          dot.classList.add('done');
+        } else if (i === currentStageIdx + 1) {
+          dot.classList.add('active');
+        }
+      }
+    }
+
+    // ─── Welcome ──────────────────────────────────────────────────────────────
+    function startJakt() {
+      const state = loadState();
+      const completed = state.completedStages;
+
+      if (completed.includes(4)) {
+        showScreen('screen-end');
+      } else if (completed.includes(3)) {
+        showScreen('screen-stage4');
+        updateDots();
+      } else if (completed.includes(2)) {
+        showScreen('screen-stage3');
+        updateDots();
+      } else if (completed.includes(1)) {
+        showScreen('screen-stage2');
+        updateDots();
+      } else {
+        showScreen('screen-stage1');
+        updateDots();
+      }
+    }
+
+    // ─── Validation helpers ───────────────────────────────────────────────────
+    function normalize(str) {
+      return str.trim().toLowerCase();
+    }
+
+    function showError(id) {
+      document.getElementById(id).classList.add('visible');
+    }
+
+    function hideError(id) {
+      document.getElementById(id).classList.remove('visible');
+    }
+
+    function showSuccess(id, cardId, callback) {
+      const successEl = document.getElementById(id);
+      successEl.classList.add('visible');
+      const card = document.getElementById(cardId);
+      card.classList.add('pulse');
+      setTimeout(() => {
+        card.classList.remove('pulse');
+        successEl.classList.remove('visible');
+        if (callback) callback();
+      }, 3000);
+    }
+
+    // ─── Stage 1 ──────────────────────────────────────────────────────────────
+    function checkStage1() {
+      const val = document.getElementById('input-stage1').value;
+      hideError('error-stage1');
+
+      const answer1 = normalize(val);
+      if (answer1 === 'smokk' || answer1 === 'smokke') {
+        markStageComplete(1);
+        showSuccess('success-stage1', 'card-stage1', () => {
+          showScreen('screen-stage2');
+          updateDots();
+        });
+      } else {
+        showError('error-stage1');
+      }
+    }
+
+    // ─── Stage 2 ──────────────────────────────────────────────────────────────
+    function codeInput(input, n) {
+      // Only allow digits
+      input.value = input.value.replace(/[^0-9]/g, '');
+      if (input.value.length === 1 && n < 4) {
+        document.getElementById('code-' + (n + 1)).focus();
+      }
+    }
+
+    function codeKeydown(event, n) {
+      if (event.key === 'Backspace') {
+        const input = document.getElementById('code-' + n);
+        if (input.value === '' && n > 1) {
+          event.preventDefault();
+          const prev = document.getElementById('code-' + (n - 1));
+          prev.value = '';
+          prev.focus();
+        }
+      }
+    }
+
+    function checkStage2() {
+      hideError('error-stage2');
+      const combined = ['code-1', 'code-2', 'code-3', 'code-4']
+        .map(id => document.getElementById(id).value.trim())
+        .join('');
+
+      if (combined === '4816') {
+        markStageComplete(2);
+        showSuccess('success-stage2', 'card-stage2', () => {
+          showScreen('screen-stage3');
+          updateDots();
+        });
+      } else {
+        showError('error-stage2');
+      }
+    }
+
+    // ─── Stage 3 ──────────────────────────────────────────────────────────────
+    function checkStage3() {
+      const val = document.getElementById('input-stage3').value;
+      hideError('error-stage3');
+
+      const correctAnswer3 = 'PASKE'; // BYTT UT DETTE SVARET
+
+      if (normalize(val) === normalize(correctAnswer3)) {
+        markStageComplete(3);
+        showSuccess('success-stage3', 'card-stage3', () => {
+          showScreen('screen-stage4');
+          updateDots();
+        });
+      } else {
+        showError('error-stage3');
+      }
+    }
+
+    // ─── Stage 4 ──────────────────────────────────────────────────────────────
+    function checkStage4() {
+      hideError('error-stage4');
+
+      const v1 = document.getElementById('combo-1').value;
+      const v2 = document.getElementById('combo-2').value;
+      const v3 = document.getElementById('combo-3').value;
+
+      const correctAnswer4 = 'PASKE'; // BYTT UT DETTE SVARET
+
+      const ok1 = normalize(v1) === 'smokk' || normalize(v1) === 'smokke';
+      const ok2 = v2.trim() === '4816';
+      const ok3 = normalize(v3) === normalize(correctAnswer4);
+
+      if (ok1 && ok2 && ok3) {
+        markStageComplete(4);
+        showScreen('screen-end');
+        document.getElementById('progress-dots').style.display = 'none';
+      } else {
+        showError('error-stage4');
+      }
+    }
+
+    // ─── Reset ────────────────────────────────────────────────────────────────
+    function resetJakt() {
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    // ─── Enter key support ────────────────────────────────────────────────────
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'Enter') return;
+      const activeScreen = SCREENS.find(s => {
+        const el = document.getElementById(s);
+        return el && el.style.display !== 'none' && el.style.display !== '';
+      });
+      if (activeScreen === 'screen-stage1') checkStage1();
+      else if (activeScreen === 'screen-stage2') checkStage2();
+      else if (activeScreen === 'screen-stage3') checkStage3();
+      else if (activeScreen === 'screen-stage4') checkStage4();
+    });
+
+    // ─── Init ─────────────────────────────────────────────────────────────────
+    (function init() {
+      // Hide all screens initially
+      SCREENS.forEach(s => {
+        const el = document.getElementById(s);
+        if (el) el.style.display = 'none';
+      });
+      document.getElementById('progress-dots').style.display = 'none';
+
+      // Show welcome screen
+      const welcomeEl = document.getElementById('screen-welcome');
+      welcomeEl.style.display = 'flex';
+    })();
+  </script>
+</body>
+</html>
