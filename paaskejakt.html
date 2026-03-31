@@ -31,8 +31,8 @@
 
     /* Fox image */
     .fox-image {
-      width: 120px;
-      height: 120px;
+      width: 220px;
+      height: 220px;
       object-fit: contain;
       display: block;
       margin: 0 auto 1rem auto;
@@ -472,7 +472,6 @@
 
   <!-- END SCREEN -->
   <div id="screen-end" style="display:none; flex-direction:column; align-items:center; width:100%; max-width:420px;">
-    <div class="end-title">🦊</div>
     <div class="end-card">
       <p>Ikke verst.</p>
       <p>Det du leter etter er oppe på hemsen. Gå til høyre — inni et av de små lagringsrommene der.</p>
@@ -664,7 +663,7 @@
       const val = document.getElementById('input-stage3').value;
       hideError('error-stage3');
 
-      const correctAnswer3 = 'PASKE'; // BYTT UT DETTE SVARET
+      const correctAnswer3 = 'PÅSKE'; // BYTT UT DETTE SVARET
 
       if (normalize(val) === normalize(correctAnswer3)) {
         markStageComplete(3);
@@ -685,7 +684,7 @@
       const v2 = document.getElementById('combo-2').value;
       const v3 = document.getElementById('combo-3').value;
 
-      const correctAnswer4 = 'PASKE'; // BYTT UT DETTE SVARET
+      const correctAnswer4 = 'PÅSKE'; // BYTT UT DETTE SVARET
 
       const ok1 = normalize(v1) === 'smokk' || normalize(v1) === 'smokke';
       const ok2 = v2.trim() === '4816';
@@ -735,4 +734,3 @@
   </script>
 </body>
 </html>
- 
