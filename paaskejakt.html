@@ -413,6 +413,27 @@
       color: #5a7a5e;
       margin-bottom: 1.25rem;
     }
+
+    /* Stage 5 — success reveal */
+    .stage5-success {
+      padding: 0.25rem 0;
+    }
+
+    .stage5-success p {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #5a4a3a;
+      margin-bottom: 0.6rem;
+    }
+
+    .stage5-success .signature {
+      font-weight: 600;
+      font-style: italic;
+      color: #c0624a;
+      margin-top: 0.4rem;
+    }
   </style>
 </head>
 <body>
@@ -431,11 +452,12 @@
 
   <!-- WELCOME SCREEN -->
   <div id="screen-welcome">
-    <h1>Påskeegg-jakt</h1>
+    <h1>På sporet av egget</h1>
     <p class="welcome-text">
       Bra. Du fant koden.<br /><br />
-      Nå er det fire ting som skiller deg fra det du leter etter. De er ikke umulige. Men de krever at du bruker øynene — og kanskje beina.<br /><br />
-      Klar? Da begynner vi.
+      Det er noen steg igjen før du finner det du leter etter.
+Se deg litt rundt. Kanskje må du også bevege deg litt.<br /><br />
+      Klar? Da setter vi i gang.
     </p>
     <button class="btn" onclick="startJakt()">Jeg er klar</button>
   </div>
@@ -461,7 +483,7 @@
         <button class="btn" onclick="checkStage1()">Sjekk svar</button>
       </div>
       <div class="success-msg" id="success-stage1">
-        <span class="checkmark">✓</span>Smokk, ja. Ikke det jeg hadde forventet å finne her heller. Men greit — vi går videre.
+        <span class="checkmark">✓</span>Smokk, ja. Kanskje noen savner den?
         <button class="btn next-btn" onclick="nextFromStage1()">Gå videre</button>
       </div>
     </div>
@@ -474,8 +496,9 @@
         <div class="stage-title">Reven utforsket</div>
         <p class="fox-speech">
           Jeg tok meg en liten runde rundt på hytta. Fin plass. Litt rotete, men sjarmerende.<br /><br />
-          Jeg fant et kort jeg likte og bestemte meg for å dele det opp. Fire biter. Fire steder. Alle gjemt der det føltes riktig.<br /><br />
-          Et sted kaldt. Et sted varmt. Et sted man leser. Et sted man vasker seg.<br /><br />
+          Jeg fant et kort. Kunne jo ikke la det ligge sånn.
+Så jeg delte det opp og la bitene rundt omkring.<br /><br />
+          Et sted som kjøler ned. Et sted som varmer opp. Bak en svart boks. Under den mest urolige stolen i rommet.<br /><br />
           Finn alle fire. Legg dem sammen. Da ser du hva du skal skrive.
         </p>
         <div class="code-inputs">
@@ -488,7 +511,7 @@
         <button class="btn" onclick="checkStage2()">Sjekk kode</button>
       </div>
       <div class="success-msg" id="success-stage2">
-        <span class="checkmark">✓</span>Fire biter, én kode. Ikke dumt. Jeg ryddet ikke etter meg, men det ser ut som du klarte deg fint.
+        <span class="checkmark">✓</span>Det gikk jo fint. Jeg var litt spent et øyeblikk.
         <button class="btn next-btn" onclick="nextFromStage2()">Gå videre</button>
       </div>
     </div>
@@ -500,19 +523,19 @@
       <div id="content-stage3">
         <div class="stage-title">Reven klatret</div>
         <p class="fox-speech">
-          Etter kjøkkenet og stua begynte jeg å vandre litt lenger.<br /><br />
-          Jeg fant stigen. Og under det nederste trinnet hadde noen glemt et ark. Så jeg lot det ligge — men jeg brettet det litt.<br /><br />
-          Finn arket. Løs det. Svaret sender deg et sted — og der finner du det du trenger.
+          Jeg tok en runde videre.<br /><br />
+          Fant stigen. Under nederste trinn lå det et ark. Det lot jeg ligge.<br /><br />
+          Finn det. Løs det. Du får noe for strevet.
         </p>
         <div class="input-group">
           <label for="input-stage3">Løsningsord</label>
           <input type="text" id="input-stage3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-          <span class="error-msg" id="error-stage3">Ikke riktig. Er du sikker på at du fant konvolutten?</span>
+          <span class="error-msg" id="error-stage3">Ikke riktig. Er du sikker på at du skrev rett?</span>
         </div>
         <button class="btn" onclick="checkStage3()">Sjekk svar</button>
       </div>
       <div class="success-msg" id="success-stage3">
-        <span class="checkmark">✓</span>Bra. Da vet du hvor du skal videre.
+        <span class="checkmark">✓</span>Håper det smakte. Du fant mer enn bare svaret.
         <button class="btn next-btn" onclick="nextFromStage3()">Gå videre</button>
       </div>
     </div>
@@ -543,7 +566,7 @@
       <div id="content-stage4">
         <div class="stage-title">Lytt godt</div>
         <p class="fox-speech">
-          Åtte knapper. Åtte lyder. Bare én rekkefølge som betyr noe. Trykk deg frem — du finner det.
+          Åtte knapper. Hver sin lyd. Det er bare én måte å sette det sammen på.
         </p>
         <div class="sound-buttons">
           <button class="sound-btn" onclick="soundPress(6)">6</button>
@@ -575,40 +598,43 @@
       <div id="content-stage5">
         <div class="stage-title">Revens siste steg</div>
         <p class="fox-speech">
-          Nå er vi der.<br /><br />
-          Du har svart på fire ting allerede. Den siste låsen er laget av akkurat de svarene.<br /><br />
-          Skriv dem inn — i riktig rekkefølge — så er vi ferdige.
+          Tre låser. Tre nøkler.<br /><br />
+          Den første er ikke gjemt i det hele tatt.
+          Den har stirret på deg siden du begynte.<br /><br />
+          Den andre? Jeg tok på meg skoene dine på vei ut.<br /><br />
+          Den tredje gjemte jeg i lydene, den har du allerede.
         </p>
 
         <div class="combo-field">
-          <label for="combo-1">Hva het det på bildet?</label>
+          <label for="combo-1">Hva er favorittbutikken min?</label>
           <input type="text" id="combo-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         </div>
         <div class="combo-field">
-          <label for="combo-2">Løsningsordet fra konvolutten</label>
+          <label for="combo-2">Hva sto det?</label>
           <input type="text" id="combo-2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         </div>
         <div class="combo-field">
-          <label for="combo-3">Koden fra knappene</label>
+          <label for="combo-3">Hva sa lydene?</label>
           <input type="text" id="combo-3" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" />
         </div>
 
         <span class="error-msg" id="error-stage5">Ett eller flere svar stemmer ikke. Sjekk alle tre.</span>
         <button class="btn" onclick="checkStage5()">Lås opp</button>
       </div>
+
+      <div class="stage5-success" id="stage5-success" style="display:none;">
+        <p>Ikke verst.</p>
+        <p>Det du leter etter er oppe på hemsen.<br />Gå til høyre, se inn i det lille rommene der.</p>
+        <p>Jeg tok ingenting. Bare så meg litt rundt.</p>
+        <p>God påske.</p>
+        <p class="signature">— Reven</p>
+        <button class="btn" style="margin-top:1.25rem;" onclick="nextFromStage5()">Gå videre</button>
+      </div>
     </div>
   </div>
 
   <!-- END SCREEN -->
-  <div id="screen-end" style="display:none; flex-direction:column; align-items:center; width:100%; max-width:420px;">
-    <div class="end-card">
-      <p>Ikke verst.</p>
-      <p>Det du leter etter er oppe på hemsen. Gå til høyre — inni et av de små lagringsrommene der.</p>
-      <p>Jeg tok ingenting. Bare kikket litt.</p>
-      <p>God påske.</p>
-      <p class="signature">— Reven</p>
-    </div>
-  </div>
+  <div id="screen-end" style="display:none; flex-direction:column; align-items:center; width:100%; max-width:420px;"></div>
 
   <!-- Reset link -->
   <div class="reset-link" onclick="resetJakt()">Nullstill</div>
@@ -860,20 +886,23 @@
       const v2 = document.getElementById('combo-2').value;
       const v3 = document.getElementById('combo-3').value;
 
-      const correctAnswer5 = 'PÅSKE'; // BYTT UT DETTE SVARET
-
-      const ok1 = normalize(v1) === 'smokk' || normalize(v1) === 'smokke';
-      const ok2 = normalize(v2) === normalize(correctAnswer5);
+      const n1 = normalize(v1);
+      const ok1 = n1 === 'the curious fox' || n1 === 'the curious fox bookshop and antiques' || n1 === 'curious fox';
+      const ok2 = v2.trim() === '1360';
       const ok3 = v3.trim() === '72943';
 
       if (ok1 && ok2 && ok3) {
         markStageComplete(5);
         document.getElementById('content-stage5').style.display = 'none';
-        showScreen('screen-end');
+        document.getElementById('stage5-success').style.display = 'block';
         document.getElementById('progress-dots').style.display = 'none';
       } else {
         showError('error-stage5');
       }
+    }
+
+    function nextFromStage5() {
+      showScreen('screen-end');
     }
 
     // ─── Reset ────────────────────────────────────────────────────────────────
