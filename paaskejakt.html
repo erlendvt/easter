@@ -191,6 +191,26 @@
       transform: scale(0.98);
     }
 
+    /* Back button */
+    .btn-back {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      background: none;
+      color: #b0a090;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-top: 1.75rem;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    .btn-back:hover {
+      color: #8a7060;
+    }
+
     /* Error message */
     .error-msg {
       display: none;
@@ -428,6 +448,12 @@
       margin-bottom: 0.6rem;
     }
 
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
     .stage5-success .signature {
       font-weight: 600;
       font-style: italic;
@@ -496,10 +522,10 @@ Se deg litt rundt. Kanskje må du også bevege deg litt.<br /><br />
         <div class="stage-title">Reven utforsket</div>
         <p class="fox-speech">
           Jeg tok meg en liten runde rundt på hytta. Fin plass. Litt rotete, men sjarmerende.<br /><br />
-          Jeg fant et kort. Kunne jo ikke la det ligge sånn.
-Så jeg delte det opp og la bitene rundt omkring.<br /><br />
-          Et sted som kjøler ned. Et sted som varmer opp. Bak en svart boks. Under den mest urolige stolen i rommet.<br /><br />
-          Finn alle fire. Legg dem sammen. Da ser du hva du skal skrive.
+          Jeg fant et kort, men jeg kunne jo ikke bare la det ligge.
+		  Så jeg delte det opp og la bitene rundt omkring.<br /><br />
+          Den første delen la jeg et sted som kjøler ned. Den andre et sted som varmer opp. Den tredje bak en svart boks. den siste under den mest urolige stolen i rommet.<br /><br />
+          Finn alle fire. Da ser du hva du skal skrive.
         </p>
         <div class="code-inputs">
           <input type="text" inputmode="numeric" maxlength="1" id="code-1" class="code-input" oninput="codeInput(this, 1)" onkeydown="codeKeydown(event, 1)" />
@@ -514,6 +540,7 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
         <span class="checkmark">✓</span>Det gikk jo fint. Jeg var litt spent et øyeblikk.
         <button class="btn next-btn" onclick="nextFromStage2()">Gå videre</button>
       </div>
+      <button class="btn-back" onclick="showStage(1)">← Gå tilbake</button>
     </div>
   </div>
 
@@ -524,20 +551,21 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
         <div class="stage-title">Reven klatret</div>
         <p class="fox-speech">
           Jeg tok en runde videre.<br /><br />
-          Fant stigen. Under nederste trinn lå det et ark. Det lot jeg ligge.<br /><br />
+          Jeg fant stigen. Under nederste trinn lå det et ark, men det lot jeg bare ligge.<br /><br />
           Finn det. Løs det. Du får noe for strevet.
         </p>
         <div class="input-group">
           <label for="input-stage3">Løsningsord</label>
           <input type="text" id="input-stage3" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-          <span class="error-msg" id="error-stage3">Ikke riktig. Er du sikker på at du skrev rett?</span>
+          <span class="error-msg" id="error-stage3">Ikke riktig. Kanskje du ikke har rett løsningsord enda?</span>
         </div>
         <button class="btn" onclick="checkStage3()">Sjekk svar</button>
       </div>
       <div class="success-msg" id="success-stage3">
-        <span class="checkmark">✓</span>Håper det smakte. Du fant mer enn bare svaret.
+        <span class="checkmark">✓</span>Bra jobba, håper det smakte!
         <button class="btn next-btn" onclick="nextFromStage3()">Gå videre</button>
       </div>
+      <button class="btn-back" onclick="showStage(2)">← Gå tilbake</button>
     </div>
   </div>
 
@@ -586,9 +614,9 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
           Gering-ding-ding-ding-dingeringeding!<br />
           Gering-ding-ding-ding-dingeringeding!
         </p>
-        <p class="stage4-code">Koden din er: 72943</p>
         <button class="btn" onclick="nextFromStage4()">Gå videre</button>
       </div>
+      <button class="btn-back" onclick="showStage(3)">← Gå tilbake</button>
     </div>
   </div>
 
@@ -598,23 +626,22 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       <div id="content-stage5">
         <div class="stage-title">Revens siste steg</div>
         <p class="fox-speech">
-          Tre låser. Tre nøkler.<br /><br />
-          Den første er ikke gjemt i det hele tatt.
-          Den har stirret på deg siden du begynte.<br /><br />
-          Den andre? Jeg tok på meg skoene dine på vei ut.<br /><br />
-          Den tredje gjemte jeg i lydene, den har du allerede.
+          Siste stopp.<br /><br />
+          — Ikke noe å lete etter her. Den har vært synlig hele tiden. Øverst.<br /><br />
+          — Beklager sølet. Måtte bare ha en slurk.<br /><br />
+          — What does the fox say?
         </p>
 
         <div class="combo-field">
-          <label for="combo-1">Hva er favorittbutikken min?</label>
-          <input type="text" id="combo-1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+          <label for="combo-1">Kode 1?</label>
+          <input type="text" id="combo-1" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autocorrect="off" spellcheck="false" />
         </div>
         <div class="combo-field">
-          <label for="combo-2">Hva sto det?</label>
+          <label for="combo-2">Kode 2?</label>
           <input type="text" id="combo-2" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
         </div>
         <div class="combo-field">
-          <label for="combo-3">Hva sa lydene?</label>
+          <label for="combo-3">Kode 3?</label>
           <input type="text" id="combo-3" inputmode="numeric" autocomplete="off" autocorrect="off" spellcheck="false" />
         </div>
 
@@ -625,11 +652,10 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       <div class="stage5-success" id="stage5-success" style="display:none;">
         <p>Ikke verst.</p>
         <p>Det du leter etter er oppe på hemsen.<br />Gå til høyre, se inn i det lille rommene der.</p>
-        <p>Jeg tok ingenting. Bare så meg litt rundt.</p>
         <p>God påske.</p>
         <p class="signature">— Reven</p>
-        <button class="btn" style="margin-top:1.25rem;" onclick="nextFromStage5()">Gå videre</button>
       </div>
+      <button class="btn-back" onclick="showStage(4)">← Gå tilbake</button>
     </div>
   </div>
 
@@ -689,6 +715,52 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       if (showDots) updateDots();
     }
 
+    function showStage(n) {
+      // Reset the visual state of the target stage before showing it
+      if (n === 1) {
+        const c = document.getElementById('content-stage1');
+        if (c) c.style.display = '';
+        const s = document.getElementById('success-stage1');
+        if (s) s.classList.remove('visible');
+        hideError('error-stage1');
+      } else if (n === 2) {
+        const c = document.getElementById('content-stage2');
+        if (c) c.style.display = '';
+        const s = document.getElementById('success-stage2');
+        if (s) s.classList.remove('visible');
+        hideError('error-stage2');
+        const back = document.querySelector('#card-stage2 .btn-back');
+        if (back) back.style.display = '';
+      } else if (n === 3) {
+        const c = document.getElementById('content-stage3');
+        if (c) c.style.display = '';
+        const s = document.getElementById('success-stage3');
+        if (s) s.classList.remove('visible');
+        hideError('error-stage3');
+        const back = document.querySelector('#card-stage3 .btn-back');
+        if (back) back.style.display = '';
+      } else if (n === 4) {
+        const c = document.getElementById('content-stage4');
+        if (c) c.style.display = '';
+        const s = document.getElementById('stage4-success');
+        if (s) s.style.display = 'none';
+        stage4Solved = false;
+        sequenceHistory = [];
+        const back = document.querySelector('#card-stage4 .btn-back');
+        if (back) back.style.display = '';
+      } else if (n === 5) {
+        const c = document.getElementById('content-stage5');
+        if (c) c.style.display = '';
+        const s = document.getElementById('stage5-success');
+        if (s) s.style.display = 'none';
+        hideError('error-stage5');
+        document.getElementById('progress-dots').style.display = 'flex';
+        const back = document.querySelector('#card-stage5 .btn-back');
+        if (back) back.style.display = '';
+      }
+      showScreen('screen-stage' + n);
+    }
+
     function updateDots() {
       const state = loadState();
       const completed = state.completedStages;
@@ -719,20 +791,15 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       if (completed.includes(5)) {
         showScreen('screen-end');
       } else if (completed.includes(4)) {
-        showScreen('screen-stage5');
-        updateDots();
+        showStage(5);
       } else if (completed.includes(3)) {
-        showScreen('screen-stage4');
-        updateDots();
+        showStage(4);
       } else if (completed.includes(2)) {
-        showScreen('screen-stage3');
-        updateDots();
+        showStage(3);
       } else if (completed.includes(1)) {
-        showScreen('screen-stage2');
-        updateDots();
+        showStage(2);
       } else {
-        showScreen('screen-stage1');
-        updateDots();
+        showStage(1);
       }
     }
 
@@ -756,6 +823,8 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       const card = document.getElementById(cardId);
       card.classList.add('pulse');
       setTimeout(() => card.classList.remove('pulse'), 500);
+      const back = card.querySelector('.btn-back');
+      if (back) back.style.display = 'none';
     }
 
     // ─── Stage 1 ──────────────────────────────────────────────────────────────
@@ -773,9 +842,7 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
     }
 
     function nextFromStage1() {
-      document.getElementById('success-stage1').classList.remove('visible');
-      showScreen('screen-stage2');
-      updateDots();
+      showStage(2);
     }
 
     // ─── Stage 2 ──────────────────────────────────────────────────────────────
@@ -814,9 +881,7 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
     }
 
     function nextFromStage2() {
-      document.getElementById('success-stage2').classList.remove('visible');
-      showScreen('screen-stage3');
-      updateDots();
+      showStage(3);
     }
 
     // ─── Stage 3 ──────────────────────────────────────────────────────────────
@@ -835,9 +900,7 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
     }
 
     function nextFromStage3() {
-      document.getElementById('success-stage3').classList.remove('visible');
-      showScreen('screen-stage4');
-      updateDots();
+      showStage(4);
     }
 
     // ─── Stage 4 — Sekvensoppgave med lyd ────────────────────────────────────
@@ -869,13 +932,14 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
           markStageComplete(4);
           document.getElementById('content-stage4').style.display = 'none';
           document.getElementById('stage4-success').style.display = 'block';
+          const back4 = document.querySelector('#card-stage4 .btn-back');
+          if (back4) back4.style.display = 'none';
         }
       }
     }
 
     function nextFromStage4() {
-      showScreen('screen-stage5');
-      updateDots();
+      showStage(5);
     }
 
     // ─── Stage 5 — Finalen ────────────────────────────────────────────────────
@@ -886,8 +950,7 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
       const v2 = document.getElementById('combo-2').value;
       const v3 = document.getElementById('combo-3').value;
 
-      const n1 = normalize(v1);
-      const ok1 = n1 === 'the curious fox' || n1 === 'the curious fox bookshop and antiques' || n1 === 'curious fox';
+      const ok1 = v1.toString().trim() === '1425';
       const ok2 = v2.trim() === '1360';
       const ok3 = v3.trim() === '72943';
 
@@ -896,6 +959,8 @@ Så jeg delte det opp og la bitene rundt omkring.<br /><br />
         document.getElementById('content-stage5').style.display = 'none';
         document.getElementById('stage5-success').style.display = 'block';
         document.getElementById('progress-dots').style.display = 'none';
+        const back5 = document.querySelector('#card-stage5 .btn-back');
+        if (back5) back5.style.display = 'none';
       } else {
         showError('error-stage5');
       }
